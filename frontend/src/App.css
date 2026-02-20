@@ -1,0 +1,258 @@
+.app-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: #f8f9fa;
+  color: #333;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+@media (prefers-color-scheme: dark) {
+  .app-container {
+    background-color: #1a1a1a;
+    color: #e0e0e0;
+  }
+}
+
+.app-header {
+  background-color: #ffffff;
+  padding: 1rem 2rem;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+@media (prefers-color-scheme: dark) {
+  .app-header {
+    background-color: #242424;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  }
+}
+
+.app-header h1 {
+  font-size: 1.5rem;
+  margin: 0;
+  background: linear-gradient(90deg, #646cff, #9f5afd);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 800;
+}
+
+.app-main {
+  flex: 1;
+  padding: 2rem;
+}
+
+.gallery-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.gallery-header {
+  margin-bottom: 2rem;
+}
+
+.gallery-header h2 {
+  margin: 0 0 0.5rem 0;
+  font-size: 2rem;
+}
+
+.gallery-header p {
+  color: #666;
+  margin: 0;
+}
+
+@media (prefers-color-scheme: dark) {
+  .gallery-header p {
+    color: #aaa;
+  }
+}
+
+/* User profile / Auth */
+.user-profile {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+@media (prefers-color-scheme: dark) {
+  .user-profile {
+    color: #aaa;
+  }
+}
+
+.user-logged-in {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.login-btn,
+.logout-btn {
+  background: #646cff;
+  color: white;
+  border: none;
+  padding: 0.4rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+
+.logout-btn {
+  background: transparent;
+  color: #ff4444;
+  border: 1px solid #ff4444;
+}
+
+.login-btn:hover {
+  background: #535bf2;
+}
+
+.logout-btn:hover {
+  background: rgba(255, 68, 68, 0.1);
+}
+
+/* Login Modal */
+.login-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+}
+
+.login-modal {
+  background: white;
+  border-radius: 12px;
+  padding: 2rem;
+  width: 100%;
+  max-width: 400px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+}
+
+@media (prefers-color-scheme: dark) {
+  .login-modal {
+    background: #2a2a2a;
+    border: 1px solid #444;
+  }
+}
+
+.login-modal h2 {
+  margin: 0 0 1.5rem 0;
+  text-align: center;
+}
+
+.login-modal input {
+  display: block;
+  width: 100%;
+  padding: 0.75rem;
+  margin-bottom: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 1rem;
+  background: transparent;
+  color: inherit;
+  box-sizing: border-box;
+}
+
+@media (prefers-color-scheme: dark) {
+  .login-modal input {
+    border-color: #555;
+  }
+}
+
+.login-modal input:focus {
+  outline: none;
+  border-color: #646cff;
+  box-shadow: 0 0 0 2px rgba(100, 108, 255, 0.2);
+}
+
+.login-error {
+  color: #ff4444;
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+}
+
+.login-actions {
+  display: flex;
+  gap: 1rem;
+}
+
+.login-submit-btn {
+  flex: 1;
+  background: #646cff;
+  color: white;
+  border: none;
+  padding: 0.75rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.login-submit-btn:hover {
+  background: #535bf2;
+}
+
+.login-cancel-btn {
+  flex: 1;
+  background: transparent;
+  color: inherit;
+  border: 1px solid #ddd;
+  padding: 0.75rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.login-hint {
+  text-align: center;
+  margin-top: 1.5rem;
+  font-size: 0.8rem;
+  color: #888;
+}
+
+.login-hint code {
+  background: rgba(100, 108, 255, 0.1);
+  padding: 0.1rem 0.4rem;
+  border-radius: 4px;
+  font-size: 0.8rem;
+}
+
+.login-prompt {
+  color: #888;
+  font-style: italic;
+  text-align: center;
+  padding: 1rem;
+}
+
+.no-comments {
+  color: #888;
+  text-align: center;
+  padding: 2rem;
+}
+
+.loading-container {
+  text-align: center;
+  padding: 4rem;
+  color: #888;
+}
+
+.app-footer {
+  text-align: center;
+  padding: 2rem;
+  color: #888;
+  font-size: 0.9rem;
+  margin-top: auto;
+}
