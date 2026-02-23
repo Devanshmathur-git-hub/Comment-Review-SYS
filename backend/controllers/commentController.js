@@ -20,14 +20,52 @@ const addComment = async (req, res) => {
     }
 };
 
-// @desc    Get all comments for a post
-// @route   GET /api/comments/:postId
+// @desc    Get paginated comments for a post (10 root comments per page, with their replies)
+// @route   GET /api/comments/:postId?page=1&limit=10
 const getCommentsByPost = async (req, res) => {
     try {
-        const comments = await Comment.find({ post: req.params.postId })
+        const page = Number.parseInt(req.query.page, 10) || 1;
+        const limit = Number.parseInt(req.query.limit, 10) || 10;
+        const skip = (page - 1) * limit;
+
+        const postId = req.params.postId;
+        const rootFilter = { post: postId, parent: { $in: [null, undefined] } };
+
+        // Total count of root (top-level) comments only
+        const totalRoots = await Comment.countDocuments(rootFilter);
+        const totalPages = Math.ceil(totalRoots / limit) || 1;
+
+        // Get this page's root comments only (10 per page)
+        const rootComments = await Comment.find(rootFilter)
             .populate('author', 'name email avatar')
-            .sort({ createdAt: 1 });
-        res.json(comments);        //Controller sends: dev
+            .sort({ createdAt: 1 })
+            .skip(skip)
+            .limit(limit)
+            .lean();
+
+        let parentIds = rootComments.map((c) => c._id);
+        const allReplies = [];
+
+        // Fetch all nested replies (replies to replies, etc.) for this page's roots
+        while (parentIds.length > 0) {
+            const batch = await Comment.find({ post: postId, parent: { $in: parentIds } })
+                .populate('author', 'name email avatar')
+                .sort({ createdAt: 1 })
+                .lean();
+            allReplies.push(...batch);
+            parentIds = batch.map((c) => c._id);
+        }
+
+        // Combine: root comments first, then all replies (frontend builds tree from flat list)
+        const comments = [...rootComments, ...allReplies];
+
+        res.json({
+            comments,
+            page,
+            limit,
+            total: totalRoots,
+            totalPages,
+        });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }

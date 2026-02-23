@@ -1,7 +1,9 @@
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
+const { faker } = require('@faker-js/faker');
 const User = require('./models/User');
 const Post = require('./models/Post');
+const Comment = require('./models/Comment');
 
 dotenv.config();
 
@@ -13,7 +15,6 @@ const seedData = async () => {
         // Clear existing data
         await User.deleteMany();
         await Post.deleteMany();
-        const Comment = require('./models/Comment');
         await Comment.deleteMany();
         console.log('Cleared existing data.');
 
@@ -100,11 +101,34 @@ const seedData = async () => {
         ]);
 
         console.log(`Created ${posts.length} posts.`);
+
+        // Create demo comments for each post so pagination can be tested
+        const demoComments = [];
+
+        // Generate ~25 fake comments per post with faker
+        posts.forEach((post, postIndex) => {
+            for (let i = 0; i < 25; i += 1) {
+                const user = users[(postIndex + i) % users.length];
+
+                demoComments.push({
+                    text: faker.lorem.sentences({ min: 1, max: 3 }),
+                    author: user._id,
+                    post: post._id,
+                    parent: null, // all top-level for now
+                });
+            }
+        });
+
+        if (demoComments.length > 0) {
+            await Comment.insertMany(demoComments);
+            console.log(`Created ${demoComments.length} demo comments.`);
+        }
         console.log('\n--- Seed Complete ---');
         console.log('\nYou can login with any of these emails:');
         users.forEach((u) => console.log(`  ${u.email} / password123`));
         console.log('\nPost IDs:');
         posts.forEach((p) => console.log(`  ${p.title}: ${p._id}`));
+        console.log('\nEach post has ~25 demo comments for testing pagination.');
 
         process.exit(0);
     } catch (error) {

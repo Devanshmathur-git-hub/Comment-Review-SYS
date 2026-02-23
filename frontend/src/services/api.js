@@ -69,12 +69,13 @@ export const getPostById = async (id) => {
 
 // ============ COMMENTS ============
 
-export const getComments = async (postId) => {
-    const res = await fetch(`${API_BASE}/comments/${postId}`, {
-        headers: getHeaders(),
-    });
+export const getComments = async (postId, page = 1, limit = 10) => {
+    const res = await fetch(
+        `${API_BASE}/comments/${postId}?page=${page}&limit=${limit}`,
+        { headers: getHeaders() }
+    );
     if (!res.ok) throw new Error('Failed to fetch comments');
-    return res.json();
+    return res.json(); // { comments, page, limit, total, totalPages }
 };
 
 export const createComment = async (text, postId, parentId = null) => {
