@@ -41,3 +41,4 @@ const CommentForm = ({ onSubmit, initialText = '', placeholder = 'Write a commen
 };
 
 export default CommentForm;
+
