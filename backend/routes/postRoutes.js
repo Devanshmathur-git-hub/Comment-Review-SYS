@@ -12,3 +12,5 @@ router.get('/', getPosts); // Public
 router.get('/:id', getPostById); // Public
 
 module.exports = router;
+
+

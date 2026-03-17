@@ -126,3 +126,4 @@ const deleteComment = async (req, res) => {
 };
 
 module.exports = { addComment, getCommentsByPost, toggleLikeComment, deleteComment };
+

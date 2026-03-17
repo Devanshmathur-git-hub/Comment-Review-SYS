@@ -51,3 +51,4 @@ const getPostById = async (req, res) => {
 };
 
 module.exports = { createPost, getPosts, getPostById };
+
