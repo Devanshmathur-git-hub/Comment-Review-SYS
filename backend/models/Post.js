@@ -7,6 +7,7 @@ const postSchema = new mongoose.Schema(
             required: [true, 'Please provide a title'],
             trim: true,
         },
+        
         content: {
             type: String,
             default: '',

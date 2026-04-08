@@ -4,6 +4,7 @@ const Comment = require('../models/Comment');
 // @route   POST /api/comments
 const addComment = async (req, res) => {
     try {
+        
         const { text, postId, parentId } = req.body;
 
         const comment = await Comment.create({

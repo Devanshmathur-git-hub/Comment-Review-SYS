@@ -7,6 +7,7 @@ const commentSchema = new mongoose.Schema(
             required: [true, 'Comment text is required'],
             trim: true,
         },
+        
         author: {
             type: mongoose.Schema.Types.ObjectId,
             ref: 'User',
